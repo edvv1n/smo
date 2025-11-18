@@ -8,6 +8,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Linkedin, Facebook, Instagram, Twitter } from "lucide-react";
 
+// --- UPDATED: Firebase Base URL Placeholder ---
+const FIREBASE_FUNCTIONS_BASE_URL = 'https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net';
+// ----------------------------------------------
+
 const Contact = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -18,26 +22,78 @@ const Contact = () => {
     service: "",
     message: "",
   });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle'); 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+    setStatus('idle');
+  };
+
+  const handleSelectChange = (value: string) => {
+    setFormData({ ...formData, service: value });
+    setStatus('idle');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    });
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      source: "",
-      service: "",
-      message: "",
-    });
+    if (status === 'loading') return;
+
+    setStatus('loading');
+    
+    // API Call: Target the deployed HTTPS Callable function
+    const apiUrl = `${FIREBASE_FUNCTIONS_BASE_URL}/submitContactForm`; 
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Callable functions return 200, check the body for success status
+        const result = await response.json();
+        
+        if (result.data && result.data.success) {
+            setStatus('success');
+            toast({
+              title: "Message Sent! 📬",
+              description: "Thank you for reaching out. I'll get back to you soon.",
+              variant: "default",
+            });
+            setFormData({ name: "", email: "", company: "", source: "", service: "", message: "" });
+        } else {
+            // Error reported by the callable function
+            setStatus('error');
+            toast({
+              title: "Submission Failed 😔",
+              description: `Error: ${result.data.message || 'Could not process your request.'}`,
+              variant: "destructive",
+            });
+        }
+      } else {
+        // Handle direct HTTP errors
+        setStatus('error');
+        toast({
+          title: "Connection Error ⚠️",
+          description: "Server responded with an unexpected status. Please try again later.",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      console.error('Network Error:', err);
+      setStatus('error');
+      toast({
+        title: "Connection Error ⚠️",
+        description: "Failed to connect to the server. Please try again later.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
     <main className="pt-24 pb-20">
-      {/* Header */}
+      {/* Header (No Change) */}
       <section className="bg-gradient-to-b from-accent/10 to-transparent py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 animate-fade-in-up">Let's Start a Conversation</h1>
@@ -49,7 +105,7 @@ const Contact = () => {
 
       <section className="container mx-auto px-4 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Form */}
+          {/* Contact Form (No Change in structure) */}
           <Card className="animate-slide-in-left hover-lift">
             <CardContent className="p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -59,7 +115,7 @@ const Contact = () => {
                     id="name"
                     required
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={handleChange}
                     placeholder="Your full name"
                   />
                 </div>
@@ -71,7 +127,7 @@ const Contact = () => {
                     type="email"
                     required
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={handleChange}
                     placeholder="your@email.com"
                   />
                 </div>
@@ -81,7 +137,7 @@ const Contact = () => {
                   <Input
                     id="company"
                     value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    onChange={handleChange}
                     placeholder="Optional"
                   />
                 </div>
@@ -91,14 +147,14 @@ const Contact = () => {
                   <Input
                     id="source"
                     value={formData.source}
-                    onChange={(e) => setFormData({ ...formData, source: e.target.value })}
+                    onChange={handleChange}
                     placeholder="Optional"
                   />
                 </div>
 
                 <div>
                   <Label htmlFor="service">What service are you interested in? *</Label>
-                  <Select value={formData.service} onValueChange={(value) => setFormData({ ...formData, service: value })}>
+                  <Select value={formData.service} onValueChange={handleSelectChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
@@ -120,13 +176,19 @@ const Contact = () => {
                     required
                     rows={6}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={handleChange}
                     placeholder="Please briefly describe your goals and vision"
                   />
                 </div>
 
-                <Button type="submit" variant="hero" className="w-full" size="lg">
-                  Send Message
+                <Button 
+                    type="submit" 
+                    variant="hero" 
+                    className="w-full" 
+                    size="lg"
+                    disabled={status === 'loading'} 
+                >
+                  {status === 'loading' ? 'Sending...' : 'Send Message'}
                 </Button>
 
                 <p className="text-xs text-muted-foreground italic">
@@ -143,7 +205,7 @@ const Contact = () => {
             </CardContent>
           </Card>
 
-          {/* Contact Information */}
+          {/* Contact Information (No Change) */}
           <div className="space-y-8 animate-slide-in-right">
             <Card className="border-2 border-primary/20 hover-lift">
               <CardContent className="p-8">

@@ -2,10 +2,75 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, Rocket, Compass, FileText, Lightbulb, Mic } from "lucide-react";
+import { loadStripe, Stripe } from '@stripe/stripe-js';
 import mentorshipImage from "@/assets/mentorship.jpg";
 import speakingImage from "@/assets/speaking.jpg";
 
+// --- Stripe Setup ---
+// FIX: Use import.meta.env instead of process.env for client-side code in Vite projects.
+// Ensure your key in the .env file is named VITE_STRIPE_PUBLISHABLE_KEY
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string);
+
+// Placeholder Price IDs - REPLACE with your actual IDs from the Stripe Dashboard
+const PRICE_ID_BUSINESS_PLAN = 'price_1P3c...your_business_price_id';
+const PRICE_ID_STRATEGIC_PLAN = 'price_1P3d...your_strategic_price_id';
+
 const Services = () => {
+
+  // Checkout Handler Function
+  const handleCheckout = async (priceId: string) => {
+    const stripe = await stripePromise;
+
+    if (!stripe) {
+      console.error("Stripe.js failed to load.");
+      return;
+    }
+
+    // TS FIX: Assert the type to 'any' for redirectToCheckout method
+    const checkoutStripe = stripe as any; 
+
+    // API Call: Targets the Next.js backend running on localhost:3000
+    const apiUrl = 'http://localhost:3000/api/create-checkout-session'; 
+    
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ priceId: priceId }), 
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ error: "Unknown error or invalid JSON response." }));
+            console.error("Backend error creating session:", response.status, errorData.error);
+            alert(`Could not start checkout. Status: ${response.status}`);
+            return;
+        }
+
+        const { sessionId, error } = await response.json();
+        
+        if (error || !sessionId) {
+             console.error("Backend returned logic error or missing sessionId:", error);
+             alert("Error during session creation: " + (error || "Missing session ID."));
+             return;
+        }
+
+        // Redirect to Stripe Checkout
+        const result = await checkoutStripe.redirectToCheckout({
+            sessionId: sessionId,
+        });
+
+        if (result.error) {
+            console.error(result.error.message);
+            alert("Error redirecting to checkout: " + result.error.message);
+        }
+    } catch (networkError) {
+        console.error("Network or Fetch Error:", networkError);
+        alert("Cannot reach the backend server (http://localhost:3000). Ensure it is running.");
+    }
+  };
+  
   return (
     <main className="pt-24 pb-20">
       {/* Header */}
@@ -27,7 +92,7 @@ const Services = () => {
           <div className="mb-12 animate-fade-in-up">
             <img src={mentorshipImage} alt="Mentorship and strategic partnership" className="rounded-2xl shadow-2xl w-full max-w-3xl mx-auto" />
           </div>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             <Card className="border-2 border-accent/20 hover:border-accent hover-lift transition-all duration-300 animate-scale-in" style={{ animationDelay: '0.1s' }}>
               <CardHeader>
@@ -124,7 +189,7 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Resources Section */}
+      {/* Resources Section - Payment Integration */}
       <section className="bg-gradient-to-r from-primary/5 to-secondary/5 py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
@@ -136,6 +201,7 @@ const Services = () => {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              {/* Product 1: The Business Plan Blueprint Template */}
               <Card className="hover-lift">
                 <CardHeader>
                   <FileText className="w-12 h-12 text-primary mb-4" />
@@ -149,11 +215,18 @@ const Services = () => {
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold text-primary">$99.99</span>
-                    <Button variant="default">Add to Cart</Button>
+                    {/* Attach handler to button for Product 1 */}
+                    <Button 
+                      variant="default" 
+                      onClick={() => handleCheckout(PRICE_ID_BUSINESS_PLAN)}
+                    >
+                      Add to Cart
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
 
+              {/* Product 2: The Strategic Plan Framework Template */}
               <Card className="hover-lift">
                 <CardHeader>
                   <Lightbulb className="w-12 h-12 text-accent mb-4" />
@@ -167,7 +240,13 @@ const Services = () => {
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold text-accent">$60.99</span>
-                    <Button variant="accent">Add to Cart</Button>
+                    {/* Attach handler to button for Product 2 */}
+                    <Button 
+                      variant="accent"
+                      onClick={() => handleCheckout(PRICE_ID_STRATEGIC_PLAN)}
+                    >
+                      Add to Cart
+                    </Button>
                   </div>
                 </CardContent>
               </Card>

@@ -107,6 +107,33 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
+  /* --- COOKIE TOAST UTILITIES (NEW) --- */
+  
+  /* Utility for the fixed cookie toast container */
+  .cookie-toast-container {
+    /* Fixed, bottom-right positioning with padding on desktop */
+    @apply fixed bottom-0 right-0 z-[9999] p-4; 
+  }
+
+  @media (min-width: 768px) { /* MD breakpoint for desktop layout */
+    .cookie-toast-container {
+      @apply max-w-sm; /* Limit width on desktop */
+    }
+  }
+
+  @media (max-width: 767px) { /* Mobile-specific full-width layout */
+    .cookie-toast-container {
+      @apply w-full p-0; /* Full width, remove side padding */
+    }
+    
+    .cookie-toast-container > div {
+        /* Make the inner content use rounded top corners, but square bottom to meet screen edge */
+        @apply rounded-none rounded-t-xl; 
+    }
+  }
+
+  /* --- EXISTING UTILITIES --- */
+
   .hover-lift {
     @apply transition-transform duration-300 hover:-translate-y-1;
   }
