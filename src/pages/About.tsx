@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Sprout, Target, Users, Heart, Mountain, Home, Compass } from "lucide-react";
 import plantingImage from "@/assets/planting-seeds.jpg";
-import growthImage from "@/assets/growth-garden.jpg";
+import growthImage from "@/assets/amr.jpg";
 
 const About = () => {
   return (
