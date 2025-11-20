@@ -7,7 +7,7 @@ import globalImage from "@/assets/global-exchange.jpg";
 import gwceLogo from "@/assets/gweclogo.svg"; // Already imported
 import wvLogo from "@/assets/wvlogo.svg";    // Placeholder import
 import smjroLogo from "@/assets/smologo.svg"; // Placeholder import
-import icepLogo from "@/assets/wvlogo.svg";  // Placeholder import
+import icepLogo from "@/assets/icep.png";  // Placeholder import
 
 // Define the type for the venture object for better TypeScript support
 interface Venture {
