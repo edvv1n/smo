@@ -16,6 +16,7 @@ interface Venture {
   logo: string; // Changed from icon: Component to logo: string
   description: string;
   color: "primary" | "accent" | "secondary";
+  link: string; // Keep the link property
 }
 
 
@@ -29,6 +30,8 @@ const Ventures = () => {
       description:
         "An initiative dedicated to empowering women and girls to advocate for themselves and address their own needs through quality education, training programs, and good health and well-being to achieve long-term positive outcomes.",
       color: "primary",
+      // Placeholder link to be external
+      link: "https://www.womenfulvoice.org", 
     },
     {
       name: "Global Women's Cultural Exchange",
@@ -37,6 +40,8 @@ const Ventures = () => {
       description:
         "A nonprofit organization focused on empowering and connecting women globally by fostering cultural awareness, appreciation, and meaningful dialogue. Highlighting unique experiences of women from different regions that transform into inspired action, understanding, and lasting change.",
       color: "accent",
+      // Placeholder link to be external
+      link: "https://www.globalwomenculturalexchange.org", 
     },
     {
       name: "SMJRO LLC / SMJRO SRL",
@@ -45,6 +50,8 @@ const Ventures = () => {
       description:
         "Strategic business ventures focused on sustainable development and creating economic opportunities in underserved communities.",
       color: "secondary",
+      // Placeholder link to be external
+      link: "https://www.adoras.holidayfuture.com", 
     },
     {
       name: "ICEP",
@@ -53,6 +60,8 @@ const Ventures = () => {
       description:
         "Leading innovative programs that bridge cultural gaps and create pathways for professional and personal development.",
       color: "primary",
+      // Placeholder link to be external
+      link: "https://www.linkedin.com/company/international-commission-of-equity-peace-ipec/?lipi=urn%3Ali%3Apage%3Ad_flag-ship3_search_srp_all%3JH7O5iVaSIOZ-takZW7xdFA%3D%3D", 
     },
   ];
 
@@ -98,10 +107,13 @@ const Ventures = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground leading-relaxed mb-6">{venture.description}</p>
-                  <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground">
-                    Learn More
-                    <ExternalLink className="w-4 h-4 ml-2" />
-                  </Button>
+                  {/* CORRECT IMPLEMENTATION: Wrap Button in <a> and use target="_blank" */}
+                  <a href={venture.link} target="_blank" rel="noopener noreferrer" className="block">
+                    <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground">
+                      Learn More
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
             );
