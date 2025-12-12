@@ -5,6 +5,7 @@ import { Heart, Rocket, Compass, FileText, Lightbulb, Mic } from "lucide-react";
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import mentorshipImage from "@/assets/mentorship.jpg";
 import speakingImage from "@/assets/speaking.jpg";
+import globalImage from "@/assets/global-exchange.jpg";
 
 // --- Stripe Setup ---
 // FIX: Use import.meta.env instead of process.env for client-side code in Vite projects.
@@ -74,11 +75,14 @@ const Services = () => {
   return (
     <main className="pt-24 pb-20">
       {/* Header */}
-      <section className="bg-gradient-to-b from-accent/10 to-transparent py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6">Services</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Strategic mentorship and resources to transform your vision into sustainable impact
+     <section className="bg-gradient-to-b from-secondary/10 to-transparent py-16 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <img src={globalImage} alt="" className="w-full h-full object-cover" />
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 animate-fade-in-up">Services</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          Strategic mentorship and resources to transform your vision into sustainable impact
           </p>
         </div>
       </section>

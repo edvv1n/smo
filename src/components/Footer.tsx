@@ -12,8 +12,9 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="md:col-span-2">
           <img className="h-20 mt-2 mb-2 w-auto max-h-full" src={Logo} alt="Logo" />
-            <p className="text-background/80 mb-4">
-              Engineer. Executive. Mentor. Founder. Nurturing visionary leaders and sustainable ventures.
+            <p className="text-background/80">
+              Engineer. Executive. Mentor. Founder. </p>
+              <p className="text-background/80 mb-4">Nurturing visionary leaders and sustainable ventures.
             </p>
             <div className="flex gap-4">
               <a

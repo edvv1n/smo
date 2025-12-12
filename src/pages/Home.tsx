@@ -132,7 +132,7 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-secondary/20 relative overflow-hidden">
+      {/* <section className="py-20 bg-secondary/20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <img src={collaborationImage} alt="" className="w-full h-full object-cover" />
         </div>
@@ -194,7 +194,7 @@ const Home = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Call to Action */}
       <section className="py-20 bg-gradient-to-r from-primary via-secondary to-primary text-primary-foreground relative overflow-hidden">

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react"; // Keep ExternalLink for the button icon
@@ -51,7 +52,7 @@ const Ventures = () => {
         "Strategic business ventures focused on sustainable development and creating economic opportunities in underserved communities.",
       color: "secondary",
       // Placeholder link to be external
-      link: "https://www.adoras.holidayfuture.com", 
+      link: "https://adoras.holidayfuture.com/", 
     },
     {
       name: "ICEP",
@@ -132,13 +133,14 @@ const Ventures = () => {
               Each venture represents an opportunity to create meaningful change. Let's explore how we can work
               together.
             </p>
-            <Button
+            <Link to="/contact"><Button
               variant="outline"
               size="lg"
               className="border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
             >
               Get in Touch
             </Button>
+            </Link>
           </CardContent>
         </Card>
       </section>
