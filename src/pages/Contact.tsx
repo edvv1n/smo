@@ -8,9 +8,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Linkedin, Facebook, Instagram, Twitter } from "lucide-react";
 
-// --- UPDATED: Firebase Base URL Placeholder ---
-const FIREBASE_FUNCTIONS_BASE_URL = 'https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net';
-// ----------------------------------------------
+// --- CONFIGURATION ---
+const WP_CF7_BASE = 'https://senska.onmy.cloud/wp-json/contact-form-7/v1';
+const CONTACT_FORM_ID = '70f5e8e';
+// ---------------------
 
 const Contact = () => {
   const { toast } = useToast();
@@ -40,21 +41,23 @@ const Contact = () => {
 
     setStatus('loading');
     
-    // API Call: Target the deployed HTTPS Callable function
-    const apiUrl = `${FIREBASE_FUNCTIONS_BASE_URL}/submitContactForm`; 
+    const body = new FormData();
+    body.append("your-name", formData.name);
+    body.append("your-email", formData.email);
+    body.append("your-company", formData.company);
+    body.append("your-source", formData.source);
+    body.append("your-service", formData.service);
+    body.append("your-message", formData.message);
 
     try {
-      const response = await fetch(apiUrl, {
+      const response = await fetch(`${WP_CF7_BASE}/contact-forms/${CONTACT_FORM_ID}/feedback`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: body,
       });
 
-      if (response.ok) {
-        // Callable functions return 200, check the body for success status
-        const result = await response.json();
-        
-        if (result.data && result.data.success) {
+      const result = await response.json();
+
+      if (result.status === 'mail_sent') {
             setStatus('success');
             toast({
               title: "Message Sent! 📬",
@@ -62,30 +65,20 @@ const Contact = () => {
               variant: "default",
             });
             setFormData({ name: "", email: "", company: "", source: "", service: "", message: "" });
-        } else {
-            // Error reported by the callable function
+      } else {
             setStatus('error');
             toast({
               title: "Submission Failed 😔",
-              description: `Error: ${result.data.message || 'Could not process your request.'}`,
+              description: result.message || "Could not process your request.",
               variant: "destructive",
             });
-        }
-      } else {
-        // Handle direct HTTP errors
-        setStatus('error');
-        toast({
-          title: "Connection Error ⚠️",
-          description: "Server responded with an unexpected status. Please try again later.",
-          variant: "destructive",
-        });
       }
     } catch (err) {
       console.error('Network Error:', err);
       setStatus('error');
       toast({
         title: "Connection Error ⚠️",
-        description: "Failed to connect to the server. Please try again later.",
+        description: "Failed to connect to the server.",
         variant: "destructive",
       });
     }
@@ -93,7 +86,6 @@ const Contact = () => {
 
   return (
     <main className="pt-24 pb-20">
-      {/* Header (No Change) */}
       <section className="bg-gradient-to-b from-accent/10 to-transparent py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 animate-fade-in-up">Let's Start a Conversation</h1>
@@ -105,53 +97,25 @@ const Contact = () => {
 
       <section className="container mx-auto px-4 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Form (No Change in structure) */}
           <Card className="animate-slide-in-left hover-lift">
             <CardContent className="p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <Label htmlFor="name">Name *</Label>
-                  <Input
-                    id="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your full name"
-                  />
+                  <Input id="name" required value={formData.name} onChange={handleChange} placeholder="Your full name" />
                 </div>
-
                 <div>
                   <Label htmlFor="email">Email Address *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="your@email.com"
-                  />
+                  <Input id="email" type="email" required value={formData.email} onChange={handleChange} placeholder="your@email.com" />
                 </div>
-
                 <div>
                   <Label htmlFor="company">Company/Organization Name</Label>
-                  <Input
-                    id="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    placeholder="Optional"
-                  />
+                  <Input id="company" value={formData.company} onChange={handleChange} placeholder="Optional" />
                 </div>
-
                 <div>
                   <Label htmlFor="source">How did you hear about me?</Label>
-                  <Input
-                    id="source"
-                    value={formData.source}
-                    onChange={handleChange}
-                    placeholder="Optional"
-                  />
+                  <Input id="source" value={formData.source} onChange={handleChange} placeholder="Optional" />
                 </div>
-
                 <div>
                   <Label htmlFor="service">What service are you interested in? *</Label>
                   <Select value={formData.service} onValueChange={handleSelectChange}>
@@ -168,55 +132,26 @@ const Contact = () => {
                     </SelectContent>
                   </Select>
                 </div>
-
                 <div>
                   <Label htmlFor="message">Message *</Label>
-                  <Textarea
-                    id="message"
-                    required
-                    rows={6}
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Please briefly describe your goals and vision"
-                  />
+                  <Textarea id="message" required rows={6} value={formData.message} onChange={handleChange} placeholder="Please briefly describe your goals and vision" />
                 </div>
-
-                <Button 
-                    type="submit" 
-                    variant="hero" 
-                    className="w-full" 
-                    size="lg"
-                    disabled={status === 'loading'} 
-                >
+                <Button type="submit" variant="hero" className="w-full" size="lg" disabled={status === 'loading'}>
                   {status === 'loading' ? 'Sending...' : 'Send Message'}
                 </Button>
-
                 <p className="text-xs text-muted-foreground italic">
                   I welcome serious inquiries about my mentorship services and meaningful collaboration opportunities.
-                  Please note that due to my limited capacity, I may not be able to respond to all inquiries, but I
-                  appreciate your message.
                 </p>
               </form>
-
-              <div className="mt-8 pt-8 border-t border-border text-center">
-                <p className="text-sm italic text-muted-foreground mb-2">I'm looking forward to reading your story,</p>
-                <p className="font-serif text-lg">- Senska</p>
-              </div>
             </CardContent>
           </Card>
 
-          {/* Contact Information (No Change) */}
           <div className="space-y-8 animate-slide-in-right">
             <Card className="border-2 border-primary/20 hover-lift">
               <CardContent className="p-8">
                 <Mail className="w-10 h-10 text-primary mb-4 animate-bounce-subtle" />
                 <h3 className="text-xl font-serif font-semibold mb-2">Email</h3>
-                <a
-                  href="mailto:self@senska.onmy.cloud"
-                  className="text-primary hover:underline"
-                >
-                  self@senska.onmy.cloud
-                </a>
+                <a href="mailto:self@senska.onmy.cloud" className="text-primary hover:underline">self@senska.onmy.cloud</a>
               </CardContent>
             </Card>
 
@@ -258,7 +193,24 @@ const Contact = () => {
                     className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:rotate-12"
                     aria-label="Twitter"
                   >
-                    <Twitter size={20} />
+                    <svg 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 100 100" 
+                  fill="currentColor"
+                >
+                  <text 
+                    x="50%" 
+                    y="50%" 
+                    dominantBaseline="middle" 
+                    textAnchor="middle" 
+                    fontFamily="sans-serif" 
+                    fontSize="90" 
+                    fontWeight="bold"
+                  >
+                    𝕏
+                  </text>
+                </svg>
                   </a>
                 </div>
               </CardContent>
@@ -267,12 +219,7 @@ const Contact = () => {
             <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-0 hover-lift">
               <CardContent className="p-8">
                 <h3 className="text-xl font-serif font-semibold mb-4">Office Hours</h3>
-                <p className="text-muted-foreground mb-2">
-                  I typically respond to inquiries within 1-2 business days.
-                </p>
-                <p className="text-muted-foreground">
-                  For speaking engagements and urgent matters, please mention that in your message subject.
-                </p>
+                <p className="text-muted-foreground">I typically respond to inquiries within 1-2 business days.</p>
               </CardContent>
             </Card>
           </div>

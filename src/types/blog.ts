@@ -17,7 +17,7 @@ export interface BlogPost {
     category: string;   
     authorName: string; 
     featured_image_url?: string; 
-    author?: Author;             
+    readingTime: string;
 }
 
 export type BlogPostSummary = Omit<BlogPost, 'content' | 'author'>;
