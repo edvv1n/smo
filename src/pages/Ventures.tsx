@@ -5,29 +5,28 @@ import { ExternalLink } from "lucide-react"; // Keep ExternalLink for the button
 import globalImage from "@/assets/global-exchange.jpg";
 
 // 1. IMPORT ALL LOCAL LOGOS (Assuming these paths are correct)
-import gwceLogo from "@/assets/gweclogo.svg"; // Already imported
-import wvLogo from "@/assets/wvlogo.svg";    // Placeholder import
-import smjroLogo from "@/assets/smologo.svg"; // Placeholder import
-import icepLogo from "@/assets/icep.png";  // Placeholder import
+import gwceLogo from "@/assets/gweclogo.svg";
+import wvLogo from "@/assets/wvlogo.svg";
+import smjroLogo from "@/assets/smologo.svg";
+import icepLogo from "@/assets/icep.png";
 
-// Define the type for the venture object for better TypeScript support
 interface Venture {
   name: string;
   role: string;
-  logo: string; // Changed from icon: Component to logo: string
+  logo: string;
   description: string;
   color: "primary" | "accent" | "secondary";
-  link: string; // Keep the link property
+  link: string;
 }
 
 
 const Ventures = () => {
-  // 2. UPDATE THE VENTURES ARRAY TO USE LOGO PATHS INSTEAD OF ICON COMPONENTS
+
   const ventures: Venture[] = [
     {
       name: "Womenful Voice",
       role: "CEO & Founder",
-      logo: wvLogo, // Use imported image path
+      logo: wvLogo,
       description:
         "An initiative dedicated to empowering women and girls to advocate for themselves and address their own needs through quality education, training programs, and good health and well-being to achieve long-term positive outcomes.",
       color: "primary",

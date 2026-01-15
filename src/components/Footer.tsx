@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Linkedin, Twitter, Mail } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Mail } from "lucide-react"; // Removed Twitter import
 import Logo from "@/assets/smo_logo.png";
 
 const Footer = () => {
@@ -11,10 +11,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand Column */}
           <div className="md:col-span-2">
-          <img className="h-20 mt-2 mb-2 w-auto max-h-full" src={Logo} alt="Logo" />
+            <img className="h-20 mt-2 mb-2 w-auto max-h-full" src={Logo} alt="Logo" />
             <p className="text-background/80">
-              Engineer. Executive. Mentor. Founder. </p>
-              <p className="text-background/80 mb-4">Nurturing visionary leaders and sustainable ventures.
+              Engineer. Executive. Mentor. Founder.
+            </p>
+            <p className="text-background/80 mb-4">
+              Nurturing visionary leaders and sustainable ventures.
             </p>
             <div className="flex gap-4">
               <a
@@ -36,7 +38,7 @@ const Footer = () => {
                 <Facebook size={20} />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://instagram.com/smjean.women"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-background/80 hover:text-primary transition-colors"
@@ -44,6 +46,7 @@ const Footer = () => {
               >
                 <Instagram size={20} />
               </a>
+
               <a
                 href="https://twitter.com"
                 target="_blank"
@@ -51,7 +54,24 @@ const Footer = () => {
                 className="text-background/80 hover:text-primary transition-colors"
                 aria-label="Twitter"
               >
-                <Twitter size={20} />
+                <svg 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 100 100" 
+                  fill="currentColor"
+                >
+                  <text 
+                    x="50%" 
+                    y="50%" 
+                    dominantBaseline="middle" 
+                    textAnchor="middle" 
+                    fontFamily="sans-serif" 
+                    fontSize="90" 
+                    fontWeight="bold"
+                  >
+                    𝕏
+                  </text>
+                </svg>
               </a>
             </div>
           </div>

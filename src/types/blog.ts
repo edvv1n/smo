@@ -1,19 +1,23 @@
 export interface Author {
+    id: number;
     name: string;
-    authorImage?: string; // URL from Sanity
-    bio?: any; // Sanity Block Content
+    description?: string; 
+    avatar_urls?: {
+        [key: string]: string; 
+    };
 }
 
 export interface BlogPost {
+    id: number;
     slug: string;
-    title: string;
-    excerpt: string; // Used for index page summary
-    date: string; // PublishedAt from Sanity
-    category: string; // Category title
-    authorName: string; // Used for index page
-    mainImageUrl?: string; // URL for the main image
-    body?: any; // Sanity Block Content (Full post)
-    author?: Author; // Full author object for detail page
+    title: string;      
+    content: string;    
+    excerpt: string;    
+    date: string;       
+    category: string;   
+    authorName: string; 
+    featured_image_url?: string; 
+    author?: Author;             
 }
 
-export interface BlogPostSummary extends Omit<BlogPost, 'body' | 'mainImageUrl' | 'author'> {}
+export type BlogPostSummary = Omit<BlogPost, 'content' | 'author'>;

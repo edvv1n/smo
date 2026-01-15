@@ -34,11 +34,6 @@ const Home = () => {
                 Learn My Story
               </Button>
             </Link>
-            <Link to="/services">
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-foreground">
-                Explore My Services
-              </Button>
-            </Link>
           </div>
         </div>
       </section>
