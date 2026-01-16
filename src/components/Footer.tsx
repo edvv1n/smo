@@ -20,7 +20,7 @@ const Footer = () => {
             </p>
             <div className="flex gap-4">
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/in/women-empowerment"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-background/80 hover:text-primary transition-colors"
@@ -28,7 +28,7 @@ const Footer = () => {
               >
                 <Linkedin size={20} />
               </a>
-              <a
+              {/* <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -36,7 +36,7 @@ const Footer = () => {
                 aria-label="Facebook"
               >
                 <Facebook size={20} />
-              </a>
+              </a> */}
               <a
                 href="https://instagram.com/smjean.women"
                 target="_blank"
@@ -48,7 +48,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://twitter.com"
+                href="https://twitter.com/home"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-background/80 hover:text-primary transition-colors"

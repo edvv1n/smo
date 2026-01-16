@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import { BlogPostSummary } from "../types/blog"; 
 import { mapWordPressPost } from "../utils/wordpress";
 
+// --- CONFIGURATION ---
 const WP_API_BASE = 'https://senska.onmy.cloud/wp-json/wp/v2';
-const WP_CF7_BASE = 'https://senska.onmy.cloud/wp-json/contact-form-7/v1';
-// const NEWSLETTER_FORM_ID = 'YOUR_NEWSLETTER_ID'; // Ensure this is set
+const WP_REST_BASE = 'https://senska.onmy.cloud/wp-json/wpforms/v1';
+const NEWSLETTER_FORM_ID = '256'; // Replace with your actual WPForms ID
+// ---------------------
 
 const Blog = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPostSummary[]>([]);
@@ -34,20 +36,32 @@ const Blog = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || status === 'loading') return;
     setStatus('loading');
-    const body = new FormData();
-    body.append("your-email", email);
+
+    // WPForms expects field IDs as keys
+    const payload = {
+      "1": email // Replace "1" with the actual Field ID from WPForms
+    };
+
     try {
-      const res = await fetch(`${WP_CF7_BASE}/contact-forms/${NEWSLETTER_FORM_ID}/feedback`, {
+      const res = await fetch(`${WP_REST_BASE}/submit/${NEWSLETTER_FORM_ID}`, {
         method: 'POST',
-        body: body,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
       const result = await res.json();
-      if (result.status === 'mail_sent') {
+      
+      if (res.ok && result.success) {
         setStatus('success');
         setEmail('');
-      } else { setStatus('error'); }
-    } catch { setStatus('error'); }
+      } else { 
+        setStatus('error'); 
+      }
+    } catch (err) { 
+      console.error(err);
+      setStatus('error'); 
+    }
   };
 
   return (
@@ -90,9 +104,11 @@ const Blog = () => {
               value={email} onChange={(e) => setEmail(e.target.value)} 
             />
             <Button type="submit" variant="outline" className="border-2 border-primary-foreground text-primary-foreground hover:bg-white hover:text-primary">
-              {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+              {status === 'loading' ? 'Subscribing...' : 
+               status === 'success' ? 'Joined! 🎉' : 'Subscribe'}
             </Button>
           </form>
+          {status === 'error' && <p className="text-destructive mt-4 text-sm font-semibold">Something went wrong. Please try again.</p>}
         </Card>
       </section>
     </main>

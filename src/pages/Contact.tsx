@@ -160,7 +160,7 @@ const Contact = () => {
                 <h3 className="text-xl font-serif font-semibold mb-4">Connect on Social Media</h3>
                 <div className="flex gap-4">
                   <a
-                    href="https://linkedin.com"
+                    href="https://linkedin.com/in/women-empowerment"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:rotate-12"
@@ -168,7 +168,7 @@ const Contact = () => {
                   >
                     <Linkedin size={20} />
                   </a>
-                  <a
+                  {/* <a
                     href="https://facebook.com"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -176,9 +176,9 @@ const Contact = () => {
                     aria-label="Facebook"
                   >
                     <Facebook size={20} />
-                  </a>
+                  </a> */}
                   <a
-                    href="https://instagram.com"
+                    href="https://instagram.com/smjean.women"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:rotate-12"
@@ -187,7 +187,7 @@ const Contact = () => {
                     <Instagram size={20} />
                   </a>
                   <a
-                    href="https://twitter.com"
+                    href="https://twitter.com/home"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:rotate-12"
