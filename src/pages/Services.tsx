@@ -23,15 +23,15 @@ const Services = () => {
         </div>
       </section>
 
+
+
       {/* Mentorship Section */}
       <section className="container mx-auto px-4 py-5">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-center">Mentorship</h2>
+          {/* <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-center">Mentorship</h2>
           <p className="text-xl text-center text-muted-foreground mb-16">Build Your Vision with a Strategic Partner</p>
 
-          <div className="mb-12 animate-fade-in-up">
-            <img src={mentorshipImage} alt="Mentorship and strategic partnership" className="rounded-2xl shadow-2xl w-full max-w-3xl mx-auto" />
-          </div>
+          
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             <Card className="border-2 border-accent/20 hover:border-accent hover-lift transition-all duration-300 animate-scale-in" style={{ animationDelay: '0.1s' }}>
@@ -82,10 +82,10 @@ const Services = () => {
                 </p>
               </CardContent>
             </Card>
-          </div>
+          </div> */}
 
           {/* Process Section */}
-          <div className="bg-muted/30 rounded-lg p-8 mb-12">
+          {/* <div className="bg-muted/30 rounded-lg p-8 mb-12">
             <h3 className="text-2xl font-serif font-bold mb-6">The Mentorship Process</h3>
             <div className="space-y-4">
               <div>
@@ -125,7 +125,7 @@ const Services = () => {
                 Apply for Mentorship
               </Button>
             </Link>
-          </div>
+          </div> */}
         </div>
       </section>
 
