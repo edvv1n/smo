@@ -6,11 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Linkedin, Facebook, Instagram, Twitter } from "lucide-react";
+import { Mail, Linkedin, Instagram, Clock } from "lucide-react";
 
 // --- CONFIGURATION ---
 const WP_CF7_BASE = 'https://senska.onmy.cloud/wp-json/contact-form-7/v1';
-const CONTACT_FORM_ID = '70f5e8e';
+const CONTACT_FORM_ID = '2591';
 // ---------------------
 
 const Contact = () => {
@@ -49,36 +49,48 @@ const Contact = () => {
     body.append("your-service", formData.service);
     body.append("your-message", formData.message);
 
+    body.append("_wpcf7_unit_tag", `wpcf7-f${CONTACT_FORM_ID}-o1`);
+
     try {
       const response = await fetch(`${WP_CF7_BASE}/contact-forms/${CONTACT_FORM_ID}/feedback`, {
         method: 'POST',
         body: body,
+        // Adding this header can sometimes help WordPress identify the request type
+        headers: {
+          'Accept': 'application/json',
+        },
       });
 
       const result = await response.json();
 
       if (result.status === 'mail_sent') {
-            setStatus('success');
-            toast({
-              title: "Message Sent! 📬",
-              description: "Thank you for reaching out. I'll get back to you soon.",
-              variant: "default",
-            });
-            setFormData({ name: "", email: "", company: "", source: "", service: "", message: "" });
+        setStatus('success');
+        toast({
+          title: "Message Sent! 📬",
+          description: "Thank you for reaching out. I'll get back to you soon.",
+        });
+        setFormData({ name: "", email: "", company: "", source: "", service: "", message: "" });
+      } else if (result.status === 'validation_failed') {
+        setStatus('error');
+        toast({
+          title: "Check your fields ✍️",
+          description: "Some information appears to be missing or invalid.",
+          variant: "destructive",
+        });
       } else {
-            setStatus('error');
-            toast({
-              title: "Submission Failed 😔",
-              description: result.message || "Could not process your request.",
-              variant: "destructive",
-            });
+        // This captures the 403 Forbidden or other server errors
+        setStatus('error');
+        toast({
+          title: "Submission Error",
+          description: result.message || "The server rejected the submission.",
+          variant: "destructive",
+        });
       }
     } catch (err) {
-      console.error('Network Error:', err);
       setStatus('error');
       toast({
-        title: "Connection Error ⚠️",
-        description: "Failed to connect to the server.",
+        title: "Network Error ⚠️",
+        description: "Could not connect to the mail server.",
         variant: "destructive",
       });
     }
@@ -88,8 +100,8 @@ const Contact = () => {
     <main className="pt-24 pb-20">
       <section className="bg-gradient-to-b from-accent/10 to-transparent py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 animate-fade-in-up">Let's Start a Conversation</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up stagger-1">
+          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6">Let's Start a Conversation</h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             I welcome inquiries about my mentorship services and potential collaborations.
           </p>
         </div>
@@ -97,7 +109,7 @@ const Contact = () => {
 
       <section className="container mx-auto px-4 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          <Card className="animate-slide-in-left hover-lift">
+          <Card className="hover-lift border-primary/5">
             <CardContent className="p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -136,8 +148,18 @@ const Contact = () => {
                   <Label htmlFor="message">Message *</Label>
                   <Textarea id="message" required rows={6} value={formData.message} onChange={handleChange} placeholder="Please briefly describe your goals and vision" />
                 </div>
-                <Button type="submit" variant="hero" className="w-full" size="lg" disabled={status === 'loading'}>
-                  {status === 'loading' ? 'Sending...' : 'Send Message'}
+                <Button 
+                  type="submit" 
+                  variant="hero" 
+                  className="w-full py-6 text-lg transition-all active:scale-95" 
+                  disabled={status === 'loading'}
+                >
+                  {status === 'loading' ? (
+                    <span className="flex items-center gap-2">
+                       <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                       Sending...
+                    </span>
+                  ) : 'Send Message'}
                 </Button>
                 <p className="text-xs text-muted-foreground italic">
                   I welcome serious inquiries about my mentorship services and meaningful collaboration opportunities.
@@ -146,80 +168,47 @@ const Contact = () => {
             </CardContent>
           </Card>
 
-          <div className="space-y-8 animate-slide-in-right">
-            <Card className="border-2 border-primary/20 hover-lift">
+          <div className="space-y-8">
+            {/* Contact Details */}
+            <Card className="border-2 border-primary/20 hover-lift transition-all">
               <CardContent className="p-8">
-                <Mail className="w-10 h-10 text-primary mb-4 animate-bounce-subtle" />
+                <Mail className="w-10 h-10 text-primary mb-4" />
                 <h3 className="text-xl font-serif font-semibold mb-2">Email</h3>
-                <a href="mailto:self@senska.onmy.cloud" className="text-primary hover:underline">self@senska.onmy.cloud</a>
+                <a href="mailto:self@senska.onmy.cloud" className="text-primary hover:underline font-medium">self@senska.onmy.cloud</a>
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-secondary/20 hover-lift">
+            <Card className="border-2 border-secondary/20 hover-lift transition-all">
               <CardContent className="p-8">
                 <h3 className="text-xl font-serif font-semibold mb-4">Connect on Social Media</h3>
                 <div className="flex gap-4">
-                  <a
-                    href="https://linkedin.com/in/women-empowerment"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:rotate-12"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin size={20} />
-                  </a>
-                  {/* <a
-                    href="https://facebook.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:rotate-12"
-                    aria-label="Facebook"
-                  >
-                    <Facebook size={20} />
-                  </a> */}
-                  <a
-                    href="https://instagram.com/smjean.women"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:rotate-12"
-                    aria-label="Instagram"
-                  >
-                    <Instagram size={20} />
-                  </a>
-                  <a
-                    href="https://twitter.com/home"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:rotate-12"
-                    aria-label="Twitter"
-                  >
-                    <svg 
-                  width="20" 
-                  height="20" 
-                  viewBox="0 0 100 100" 
-                  fill="currentColor"
-                >
-                  <text 
-                    x="50%" 
-                    y="50%" 
-                    dominantBaseline="middle" 
-                    textAnchor="middle" 
-                    fontFamily="sans-serif" 
-                    fontSize="90" 
-                    fontWeight="bold"
-                  >
-                    𝕏
-                  </text>
-                </svg>
+                  {[
+                    { icon: <Linkedin size={20} />, label: "LinkedIn", href: "https://linkedin.com/in/women-empowerment" },
+                    { icon: <Instagram size={20} />, label: "Instagram", href: "https://instagram.com/smjean.women" }
+                  ].map((social, i) => (
+                    <a
+                      key={i}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110"
+                      aria-label={social.label}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                  <a href="https://twitter.com/home" className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all hover:scale-110">
+                    <span className="font-bold">𝕏</span>
                   </a>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-0 hover-lift">
+            <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border-0 shadow-inner">
               <CardContent className="p-8">
-                <h3 className="text-xl font-serif font-semibold mb-4">Office Hours</h3>
-                <p className="text-muted-foreground">I typically respond to inquiries within 1-2 business days.</p>
+                <Clock className="w-10 h-10 text-accent mb-4 opacity-70" />
+                <h3 className="text-xl font-serif font-semibold mb-4">Response Time</h3>
+                <p className="text-muted-foreground">I typically respond to serious inquiries within 1-2 business days. Thank you for your patience.</p>
               </CardContent>
             </Card>
           </div>
