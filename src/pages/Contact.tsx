@@ -135,10 +135,6 @@ const Contact = () => {
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="nonprofit">Nonprofit Mentorship</SelectItem>
-                      <SelectItem value="business">Business Mentorship</SelectItem>
-                      <SelectItem value="newcomer">Newcomer Mentorship</SelectItem>
-                      <SelectItem value="collaboration">Collaboration</SelectItem>
                       <SelectItem value="speaking">Speaking Engagement</SelectItem>
                       <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
