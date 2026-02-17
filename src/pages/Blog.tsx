@@ -10,17 +10,22 @@ import jsonp from 'jsonp';
 // --- CONFIGURATION ---
 const WP_API_BASE = 'https://senska.onmy.cloud/wp-json/wp/v2';
 
-// Extracted from your provided Mailchimp code
-const MAILCHIMP_BASE_URL = 'https://gmail.us22.list-manage.com/subscribe/post-json';
-const U_ID = 'f2725f60ed52124230c45fbfd';
-const LIST_ID = 'cf3344f83a';
-const HONEYPOT_NAME = 'b_f2725f60ed52124230c45fbfd_cf3344f83a';
+// UPDATED based on your provided embed code
+const MAILCHIMP_BASE_URL = 'https://gmail.us3.list-manage.com/subscribe/post-json';
+const U_ID = '75fc95e211f3ae3c371747508';
+const LIST_ID = 'c6f9cd8ff3';
+const HONEYPOT_NAME = 'b_75fc95e211f3ae3c371747508_c6f9cd8ff3';
 // ---------------------
 
 const Blog = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPostSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Form States
   const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -47,12 +52,10 @@ const Blog = () => {
     setStatus('loading');
     setErrorMessage('');
 
-    // Constructing the full URL for JSONP
-    // We include u, id, and the email. 
-    const url = `${MAILCHIMP_BASE_URL}?u=${U_ID}&id=${LIST_ID}&EMAIL=${encodeURIComponent(email)}`;
+    // Adding FNAME and LNAME to the query string for Mailchimp
+    const url = `${MAILCHIMP_BASE_URL}?u=${U_ID}&id=${LIST_ID}&EMAIL=${encodeURIComponent(email)}&FNAME=${encodeURIComponent(firstName)}&LNAME=${encodeURIComponent(lastName)}`;
 
     jsonp(url, { param: 'c' }, (err, data) => {
-      // DEBUG: Check your browser console (F12) to see exactly what Mailchimp says
       console.log("Mailchimp Response:", data);
 
       if (err) {
@@ -60,11 +63,12 @@ const Blog = () => {
         setErrorMessage('Network error. Please try again later.');
       } else if (data.result !== 'success') {
         setStatus('error');
-        // Mailchimp error messages can be "0 - Error" or "User already subscribed"
         setErrorMessage(data.msg.replace(/^\d\s-\s/, '') || 'An error occurred.');
       } else {
         setStatus('success');
         setEmail('');
+        setFirstName('');
+        setLastName('');
       }
     });
   };
@@ -122,20 +126,41 @@ const Blog = () => {
               <>
                 <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Stay Inspired</h2>
                 <p className="text-primary-foreground/80 mb-8 max-w-md mx-auto">Insights on strategy and growth, delivered straight to your inbox.</p>
-                <div className="max-w-md mx-auto">
-                  <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-                    <input 
-                      type="email" required placeholder="Your email address" 
-                      className="flex-1 px-6 py-4 rounded-full text-foreground focus:outline-none focus:ring-2 focus:ring-white/50 border-0 shadow-lg" 
-                      value={email} onChange={(e) => setEmail(e.target.value)} 
-                    />
+                
+                <div className="max-w-xl mx-auto">
+                  <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    {/* Names Row */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <input 
+                        type="text" placeholder="First Name" 
+                        className="px-6 py-4 rounded-full text-foreground focus:outline-none focus:ring-2 focus:ring-white/50 border-0 shadow-lg" 
+                        value={firstName} onChange={(e) => setFirstName(e.target.value)} 
+                      />
+                      <input 
+                        type="text" placeholder="Last Name" 
+                        className="px-6 py-4 rounded-full text-foreground focus:outline-none focus:ring-2 focus:ring-white/50 border-0 shadow-lg" 
+                        value={lastName} onChange={(e) => setLastName(e.target.value)} 
+                      />
+                    </div>
+
+                    {/* Email and Submit Row */}
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <input 
+                        type="email" required placeholder="Your email address" 
+                        className="flex-1 px-6 py-4 rounded-full text-foreground focus:outline-none focus:ring-2 focus:ring-white/50 border-0 shadow-lg" 
+                        value={email} onChange={(e) => setEmail(e.target.value)} 
+                      />
+                      <Button type="submit" disabled={status === 'loading'} className="rounded-full px-8 py-4 bg-white text-primary hover:bg-primary-foreground hover:text-primary font-bold shadow-md">
+                        {status === 'loading' ? 'Joining...' : 'Subscribe'}
+                      </Button>
+                    </div>
+
+                    {/* Honeypot */}
                     <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden="true">
                       <input type="text" name={HONEYPOT_NAME} tabIndex={-1} value="" readOnly />
                     </div>
-                    <Button type="submit" disabled={status === 'loading'} className="rounded-full px-8 py-4 bg-white text-primary hover:bg-primary-foreground hover:text-primary font-bold shadow-md">
-                      {status === 'loading' ? 'Joining...' : 'Subscribe'}
-                    </Button>
                   </form>
+
                   {status === 'error' && (
                     <div className="mt-6 flex items-center justify-center gap-2 text-red-100 bg-red-900/30 py-3 px-4 rounded-xl">
                       <AlertCircle className="w-4 h-4 flex-shrink-0" />
