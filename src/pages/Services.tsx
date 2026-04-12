@@ -1,131 +1,24 @@
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Heart, Rocket, Compass, FileText, Lightbulb, Mic } from "lucide-react";
-import mentorshipImage from "@/assets/mentorship.jpg";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Heart, Rocket, Compass, FileText, Lightbulb, Mic, CheckCircle2, Globe, Users } from "lucide-react";
 import speakingImage from "@/assets/speaking.jpg";
 import globalImage from "@/assets/global-exchange.jpg";
 
 const Services = () => {
-  
   return (
     <main className="pt-24 pb-20">
       {/* Header */}
-     <section className="bg-gradient-to-b from-secondary/10 to-transparent py-16 relative overflow-hidden">
+      <section className="bg-gradient-to-b from-secondary/10 to-transparent py-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <img src={globalImage} alt="" className="w-full h-full object-cover" />
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 animate-fade-in-up">Services</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-          Strategic mentorship and resources to transform your vision into sustainable impact
+            Strategic mentorship and resources to transform your vision into sustainable impact
           </p>
-        </div>
-      </section>
-
-
-
-      {/* Mentorship Section */}
-      <section className="container mx-auto px-4 py-5">
-        <div className="max-w-5xl mx-auto">
-          {/* <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-center">Mentorship</h2>
-          <p className="text-xl text-center text-muted-foreground mb-16">Build Your Vision with a Strategic Partner</p>
-
-          
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <Card className="border-2 border-accent/20 hover:border-accent hover-lift transition-all duration-300 animate-scale-in" style={{ animationDelay: '0.1s' }}>
-              <CardHeader>
-                <Heart className="w-12 h-12 text-accent mb-4" />
-                <CardTitle className="font-serif">The Nonprofit Foundation</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">
-                  <strong>For:</strong> Aspiring founders of NGOs and community organizations.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  <strong>Includes:</strong> Strategic planning, business plan development, establishing
-                  mission/vision/value propositions, guidance on legal structure (501(c)(3) etc.), and initial board
-                  development strategy.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-2 border-primary/20 hover:border-primary hover-lift transition-all duration-300">
-              <CardHeader>
-                <Rocket className="w-12 h-12 text-primary mb-4" />
-                <CardTitle className="font-serif">The Business Launchpad</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">
-                  <strong>For:</strong> New entrepreneurs starting a business.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  <strong>Includes:</strong> Comprehensive business plan creation, market analysis, financial modeling,
-                  operational strategy, and brand positioning.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-2 border-secondary/20 hover:border-secondary hover-lift transition-all duration-300">
-              <CardHeader>
-                <Compass className="w-12 h-12 text-secondary mb-4" />
-                <CardTitle className="font-serif">The Newcomer's Guide</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">
-                  <strong>For:</strong> Individuals new to the US or Dominican Republic business/nonprofit landscape.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  <strong>Includes:</strong> A combination of the above, tailored with essential cultural and regulatory
-                  insights for navigating a new environment successfully.
-                </p>
-              </CardContent>
-            </Card>
-          </div> */}
-
-          {/* Process Section */}
-          {/* <div className="bg-muted/30 rounded-lg p-8 mb-12">
-            <h3 className="text-2xl font-serif font-bold mb-6">The Mentorship Process</h3>
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-semibold mb-2">1. Application</h4>
-                <p className="text-muted-foreground">Submit your vision via the contact form.</p>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">2. Discovery Call</h4>
-                <p className="text-muted-foreground">
-                  A conversation to ensure we are the right fit for a partnership.
-                </p>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">3. Foundation Building</h4>
-                <p className="text-muted-foreground">
-                  An intensive initial phase creating your comprehensive strategic plan.
-                </p>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">4. Year-Long Support</h4>
-                <p className="text-muted-foreground">
-                  Regular strategic check-ins, troubleshooting sessions, and ongoing guidance as you implement your plan
-                  and grow.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <p className="text-lg mb-6 text-muted-foreground">
-              This is a significant investment in your future. Because each partnership is deeply personalized,
-              investment details are discussed upon application. If you are committed to the work, I am committed to
-              being your guide.
-            </p>
-            <Link to="/contact">
-              <Button variant="hero" size="lg">
-                Apply for Mentorship
-              </Button>
-            </Link>
-          </div> */}
         </div>
       </section>
 
@@ -145,8 +38,7 @@ const Services = () => {
 
           <p className="text-lg text-muted-foreground mb-12 text-center max-w-3xl mx-auto">
             I am available to bring my unique blend of strategic insight and heartfelt storytelling to your next event,
-            conference, or corporate gathering. My keynotes are designed to inspire, educate, and equip audiences with
-            actionable frameworks for growth.
+            conference, or corporate gathering.
           </p>
 
           <div className="space-y-8 mb-12">
@@ -154,8 +46,7 @@ const Services = () => {
               <CardContent className="p-6">
                 <h3 className="text-xl font-serif font-semibold mb-2">From Seed to Success</h3>
                 <p className="text-sm text-muted-foreground">
-                  Nurturing Growth in Business and Life. Drawing on my engineering background, this talk reveals how the
-                  principles of nurturing a plant can be applied to building a resilient venture and fulfilling career.
+                  Nurturing Growth in Business and Life using engineering principles.
                 </p>
               </CardContent>
             </Card>
@@ -164,8 +55,7 @@ const Services = () => {
               <CardContent className="p-6">
                 <h3 className="text-xl font-serif font-semibold mb-2">The Blueprint for Impact</h3>
                 <p className="text-sm text-muted-foreground">
-                  Building a Sustainable Nonprofit from the Ground Up. A practical session for aspiring changemakers,
-                  breaking down the essential components of a successful nonprofit.
+                  Building a Sustainable Nonprofit from the Ground Up.
                 </p>
               </CardContent>
             </Card>
@@ -174,8 +64,7 @@ const Services = () => {
               <CardContent className="p-6">
                 <h3 className="text-xl font-serif font-semibold mb-2">Global Sisterhood</h3>
                 <p className="text-sm text-muted-foreground">
-                  Leveraging Cultural Exchange to Drive Change. This talk explores how fostering understanding among
-                  women from diverse backgrounds is a strategic imperative for solving global challenges.
+                  Leveraging Cultural Exchange to Drive Change.
                 </p>
               </CardContent>
             </Card>
@@ -190,6 +79,161 @@ const Services = () => {
           </div>
         </div>
       </section>
+
+      {/* Nonprofit Packages Section */}
+      <section className="container mx-auto px-4 py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-serif font-bold mb-4">Nonprofit Packages</h2>
+            <p className="text-muted-foreground">Comprehensive solutions tailored to your organization's budget and scale.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {/* Full Launch Package */}
+            <Card className="flex flex-col border-2 border-primary/20 hover:border-primary transition-all duration-300">
+              <CardHeader>
+                <Rocket className="w-10 h-10 text-primary mb-2" />
+                <CardTitle className="font-serif text-xl">Full Launch Package</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <ul className="text-sm space-y-2 text-muted-foreground">
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> 501(c)(3) + Bylaws</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> State Registration</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> 3 UN Passes (2 Years)</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Charter + Project Plan</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Board & Budget Docs</li>
+                </ul>
+              </CardContent>
+              <CardFooter className="flex flex-col items-start bg-muted/30 pt-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Pricing</p>
+                <p className="text-sm">Budget &lt;$50k: <strong>$1,000</strong></p>
+                <p className="text-sm">Budget $50k+: <strong>$2,500</strong></p>
+              </CardFooter>
+            </Card>
+
+            {/* Org Status Pro */}
+            <Card className="flex flex-col border-2 border-accent/20 hover:border-accent transition-all duration-300">
+              <CardHeader>
+                <Globe className="w-10 h-10 text-accent mb-2" />
+                <CardTitle className="font-serif text-xl">Org Status Pro</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <ul className="text-sm space-y-2 text-muted-foreground">
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-accent shrink-0" /> Complete Determination</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-accent shrink-0" /> Bylaws & Articles</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-accent shrink-0" /> State Charity Reg</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-accent shrink-0" /> 3 UN Event Passes</li>
+                </ul>
+              </CardContent>
+              <CardFooter className="flex flex-col items-start bg-muted/30 pt-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Pricing</p>
+                <p className="text-sm">Budget &lt;$50k: <strong>$750</strong></p>
+                <p className="text-sm">Budget $50k+: <strong>$1,500</strong></p>
+              </CardFooter>
+            </Card>
+
+            {/* Program Builder */}
+            <Card className="flex flex-col border-2 border-secondary/20 hover:border-secondary transition-all duration-300">
+              <CardHeader>
+                <FileText className="w-10 h-10 text-secondary mb-2" />
+                <CardTitle className="font-serif text-xl">Program Builder</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <ul className="text-sm space-y-2 text-muted-foreground">
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-secondary shrink-0" /> Project Charter</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-secondary shrink-0" /> Detailed Plan (15 pgs)</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-secondary shrink-0" /> Budget Template</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-secondary shrink-0" /> 3 Rounds of Revisions</li>
+                </ul>
+              </CardContent>
+              <CardFooter className="flex flex-col items-start bg-muted/30 pt-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Pricing</p>
+                <p className="text-sm">Budget &lt;$50k: <strong>$750</strong></p>
+                <p className="text-sm">Budget $50k+: <strong>$1,500</strong></p>
+              </CardFooter>
+            </Card>
+
+            {/* Board Builder */}
+            <Card className="flex flex-col border-2 border-primary/20 hover:border-primary transition-all duration-300">
+              <CardHeader>
+                <Users className="w-10 h-10 text-primary mb-2" />
+                <CardTitle className="font-serif text-xl">Board Builder</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <ul className="text-sm space-y-2 text-muted-foreground">
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> 12mo Governance Coach</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Recruitment Strategy</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Orientation Materials</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Quarterly Check-ins</li>
+                </ul>
+              </CardContent>
+              <CardFooter className="flex flex-col items-start bg-muted/30 pt-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Pricing</p>
+                <p className="text-sm">Flat Rate: <strong>$2,000</strong></p>
+                <p className="text-xs italic text-muted-foreground">Any budget size</p>
+              </CardFooter>
+            </Card>
+          </div>
+
+          {/* Key Points Note */}
+          <div className="bg-muted/30 rounded-xl p-6 border border-border">
+            <h4 className="font-serif font-bold mb-4 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-accent" /> Key Information
+            </h4>
+            <div className="grid md:grid-cols-2 gap-6 text-sm text-muted-foreground">
+              <ul className="list-disc pl-5 space-y-1">
+                <li>Budget tiers refer to projected annual revenue for the upcoming fiscal year.</li>
+                <li><strong>100% Approval Guarantee:</strong> If not approved, we revise or refund the fee.</li>
+              </ul>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>UN passes provided via partnership with <strong>Diplomacy Org</strong>.</li>
+                <li>All packages include digital delivery and dedicated management.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* À La Carte Section */}
+      <section className="container mx-auto px-4 py-16 bg-muted/20">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-serif font-bold mb-2">Individual Services</h2>
+            <p className="text-muted-foreground">Specific solutions for targeted needs.</p>
+          </div>
+          <div className="bg-background rounded-lg shadow-sm border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[70%]">Service</TableHead>
+                  <TableHead className="text-right">Price</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>501(c)(3) application + Bylaws</TableCell>
+                  <TableCell className="text-right font-semibold">$500</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>State charity registration + Articles of Incorporation</TableCell>
+                  <TableCell className="text-right font-semibold">$300</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>ECOSOC Application</TableCell>
+                  <TableCell className="text-right font-semibold">$300</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>3 UN event passes for 2 years</TableCell>
+                  <TableCell className="text-right font-semibold">$300</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      </section>
+
+
+
     </main>
   );
 };
