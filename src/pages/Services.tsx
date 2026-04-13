@@ -101,7 +101,7 @@ const Services = () => {
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> State Registration</li>
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> 3 UN Passes (2 Years)</li>
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Charter + Project Plan</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Board & Budget Docs</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Board & Budget Documents</li>
                 </ul>
               </CardContent>
               <CardFooter className="flex flex-col items-start bg-muted/30 pt-4">
@@ -121,7 +121,7 @@ const Services = () => {
                 <ul className="text-sm space-y-2 text-muted-foreground">
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-accent shrink-0" /> Complete Determination</li>
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-accent shrink-0" /> Bylaws & Articles</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-accent shrink-0" /> State Charity Reg</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-accent shrink-0" /> State Charity Registration</li>
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-accent shrink-0" /> 3 UN Event Passes</li>
                 </ul>
               </CardContent>
@@ -141,7 +141,7 @@ const Services = () => {
               <CardContent className="flex-grow">
                 <ul className="text-sm space-y-2 text-muted-foreground">
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-secondary shrink-0" /> Project Charter</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-secondary shrink-0" /> Detailed Plan (15 pgs)</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-secondary shrink-0" /> Detailed Plan (15 pages)</li>
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-secondary shrink-0" /> Budget Template</li>
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-secondary shrink-0" /> 3 Rounds of Revisions</li>
                 </ul>
@@ -161,7 +161,7 @@ const Services = () => {
               </CardHeader>
               <CardContent className="flex-grow">
                 <ul className="text-sm space-y-2 text-muted-foreground">
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> 12mo Governance Coach</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> 12 month Governance Coach</li>
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Recruitment Strategy</li>
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Orientation Materials</li>
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Quarterly Check-ins</li>
@@ -186,7 +186,7 @@ const Services = () => {
                 <li><strong>100% Approval Guarantee:</strong> If not approved, we revise or refund the fee.</li>
               </ul>
               <ul className="list-disc pl-5 space-y-1">
-                <li>UN passes provided via partnership with <strong>Diplomacy Org</strong>.</li>
+                <li>UN passes provided via partnership with <strong>Diplomacy Organization</strong>.</li>
                 <li>All packages include digital delivery and dedicated management.</li>
               </ul>
             </div>
